@@ -1,10 +1,13 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Post {
+
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	// Attributes
 	private Date moment;
@@ -19,7 +22,6 @@ public class Post {
 	public Post() {
 	}
 
-	// Accessor Methods
 	public Post(Date moment, String title, String content, Integer likes) {
 		this.moment = moment;
 		this.title = title;
@@ -27,6 +29,7 @@ public class Post {
 		this.likes = likes;
 	}
 
+	// Accessor Methods
 	public Date getMoment() {
 		return moment;
 	}
@@ -63,8 +66,30 @@ public class Post {
 		return comments;
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	// Methods
+	public void addComment(Comment comment) {
+		comments.add(comment);
+	}
+
+	public void removeComment(Comment comment) {
+		comments.remove(comment);
+	}
+
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		String quebraLinha = System.getProperty("line.separator");
+
+		sb.append(title + quebraLinha);
+		sb.append(likes);
+		sb.append(" Likes - ");
+		sb.append(sdf.format(moment) + quebraLinha);
+		sb.append(content + quebraLinha);
+		sb.append("Comments: " + quebraLinha);
+		for (Comment c : comments) {
+			sb.append(c.getText() + quebraLinha);
+		}
+		return sb.toString();
 	}
 
 }
